@@ -13,6 +13,11 @@ jobs:
         run: python experiment.py --seed 20261113 --train 8 --test 6
       - name: Python and C parity tests
         run: python -m unittest discover -s tests -v
+      - name: Validate optional model and dashboard source syntax
+        run: |
+          python -m py_compile experiment.py experiments/train_real.py
+          node --check docs/app.js
+          node --check scripts/build_lexicon.js
       - name: Rebuild CVNSS4.0 lexicon
         run: node scripts/build_lexicon.js
       - name: Assert source provenance and counts
