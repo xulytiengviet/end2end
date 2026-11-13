@@ -1,0 +1,73 @@
+{
+  "kind": "verified_lookup_lexicon_not_dialect_or_phonetic_model",
+  "converter_version": "5.0.0-audit-safe",
+  "original_authors": "Kiều Trường Lâm; Trần Tư Bình",
+  "notes": "Generated with pinned project vendor converter; default-decoder outcomes verified by GitHub Actions synthetic-research-evidence.",
+  "entries": [
+    {
+      "id": "STOP",
+      "text": "dừng",
+      "action": {
+        "kind": "stop"
+      },
+      "cvnss": "zugk",
+      "decoded_default": "dừng",
+      "ambiguous": false
+    },
+    {
+      "id": "FORWARD",
+      "text": "tiến",
+      "action": {
+        "kind": "move",
+        "direction": "forward"
+      },
+      "cvnss": "tilb",
+      "decoded_default": "tiến",
+      "ambiguous": false
+    },
+    {
+      "id": "BACK",
+      "text": "lùi",
+      "action": {
+        "kind": "move",
+        "direction": "back"
+      },
+      "cvnss": "luil",
+      "decoded_default": "lùi",
+      "ambiguous": false
+    },
+    {
+      "id": "LEFT",
+      "text": "trái",
+      "action": {
+        "kind": "turn",
+        "direction": "left"
+      },
+      "cvnss": "traij",
+      "decoded_default": "trái",
+      "ambiguous": false
+    },
+    {
+      "id": "RIGHT",
+      "text": "phải",
+      "action": {
+        "kind": "turn",
+        "direction": "right"
+      },
+      "cvnss": "faiz",
+      "decoded_default": "phải",
+      "ambiguous": false
+    },
+    {
+      "id": "LIGHT",
+      "text": "bật đèn",
+      "action": {
+        "kind": "light",
+        "value": true
+      },
+      "cvnss": "batf denl",
+      "decoded_default": "bật đèn",
+      "ambiguous": false
+    }
+  ]
+}
