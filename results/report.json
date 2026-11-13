@@ -1,0 +1,30 @@
+{
+  "data_type": "synthetic_multitone_surrogate_not_human_speech",
+  "claim_scope": "software proof of path only, not ASR or hardware benchmark",
+  "seed": 20261113,
+  "fs_hz": 16000,
+  "pcm_samples": 5120,
+  "train_samples": 144,
+  "test_samples": 126,
+  "known_count": 108,
+  "unknown_count": 18,
+  "direct_classification_accuracy": 1,
+  "hybrid_correct_accept_rate": 1,
+  "hybrid_false_accept_unknown_rate": 0,
+  "hybrid_reject_known_rate": 0,
+  "result_is_not_real_audio_accuracy": true,
+  "per_profile": {
+    "0": {
+      "n_known": 36,
+      "correct_accept": 36
+    },
+    "1": {
+      "n_known": 36,
+      "correct_accept": 36
+    },
+    "2": {
+      "n_known": 36,
+      "correct_accept": 36
+    }
+  }
+}
