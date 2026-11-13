@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="END2END: Spectrogram trực tiếp tới lệnh, CVNSS4.0 reference lexicon, Base27, trit và mô phỏng firmware số nguyên.">
+<title>END2END • Spectrogram × CVNSS4.0 × Trit</title><link rel="stylesheet" href="style.css"></head>
+<body><header><nav><a class="brand" href="#top"><span class="brand-icon">E2E</span><b>END2END</b><small>RESEARCH / 2026</small></a>
+<div class="navlinks"><a href="#architecture">Kiến trúc</a><a href="#lab">Mô phỏng</a><a href="#results">Kết quả</a><a href="#reproduce">Tái lập</a><a href="../paper/preprint.md">Preprint ↗</a></div></nav></header>
+<main id="top"><section class="hero"><p class="eyebrow">VIETNAMESE EDGE SPEECH / OPEN REPRODUCIBILITY</p>
+<h1>Speech → <em>Spectrogram</em> → Action<br><span>CVNSS4.0 as reference lexicon.</span></h1>
+<p class="lead">Suy luận trực tiếp từ đặc trưng phổ đến lệnh giới hạn. CVNSS4.0 chỉ làm từ điển tham chiếu chính tả để tra cứu nhãn; Base27 chuyển A–Z + SPACE thành ba trit cho nghiên cứu dữ liệu số nguyên và firmware.</p>
+<div class="actions"><a class="primary" href="#lab">Chạy mô phỏng ↘</a><a class="secondary" href="https://github.com/xulytiengviet/end2end">Mã nguồn ↗</a></div>
+<div class="warning">NGHIÊN CỨU TIỀN KHẢ THI: Các kết quả được đo trên sóng âm nhân tạo, KHÔNG phải giọng người, ASR đa vùng, TTS hay tốc độ chạy thật trên ESP32-S3.</div></section>
+<section class="stats" id="results"><article><span>ASR tiếng Việt</span><strong>Chưa đo</strong><small>Chờ dữ liệu giọng nói người thật</small></article>
+<article><span>C11 ↔ Python</span><strong>Parity</strong><small>64 đặc trưng số nguyên</small></article>
+<article><span>Base27 ↔ 3 trit</span><strong>27/27</strong><small>Phép chuyển đổi song ánh</small></article>
+<article><span>Mẫu thử tổng hợp</span><strong id="samples">—</strong><small id="seed">Đang đọc báo cáo</small></article></section>
+<section id="architecture" class="section"><div class="sectionhead"><p class="eyebrow">01 / ARCHITECTURE</p><h2>Một nhánh suy luận, một lớp giám sát.</h2>
+<p>CVNSS4.0 không phải khâu bắt buộc trong suy luận end-to-end. Bộ xác minh có thể từ chối lệnh mơ hồ nhưng không thể bảo đảm hệ thống đã hiểu đúng âm thanh.</p></div>
+<div class="pipeline"><div><b>01</b><strong>PCM 16 kHz</strong><small>Âm thanh / mô phỏng</small></div><span>→</span>
+<div><b>02</b><strong>Time–frequency</strong><small>Goertzel 8 × 8</small></div><span>→</span>
+<div><b>03</b><strong>Direct classifier</strong><small>Nearest centroid</small></div><span>→</span>
+<div><b>04</b><strong>Safety gate</strong><small>Verify + NOOP</small></div></div>
+<div class="dual"><article><h3>Nhánh quyết định trực tiếp</h3><p>64 đặc trưng phổ → nhãn lệnh. Đây là prototype nearest-centroid, <strong>không</strong> giả nhận là mạng neural end-to-end hay ASR.</p></article>
+<article><h3>Từ điển CVNSS4.0</h3><p>Codec audit-safe của dự án CVNSS4.0 gốc chuyển tên lệnh Unicode thành mã chính tả ASCII và kiểm tra khả năng giải mã. Không đại diện cho IPA hoặc giọng vùng miền.</p></article></div></section>
+<section id="lab" class="section lab"><div class="sectionhead"><p class="eyebrow">02 / INTERACTIVE LAB</p><h2>Phổ tần tổng hợp và cổng kiểm soát.</h2>
+<p>Biểu đồ được tạo bằng véc-tơ đặc trưng mô phỏng trên trình duyệt; phép kiểm chứng bit-exact chạy trong chương trình Python/C11 được công bố riêng.</p></div>
+<div class="labgrid"><div class="panel"><label for="command">Lệnh / mẫu chưa biết</label>
+<select id="command"><option value="0">Dừng — STOP</option><option value="1">Tiến — FORWARD</option><option value="2">Lùi — BACK</option><option value="3">Trái — LEFT</option><option value="4">Phải — RIGHT</option><option value="5">Bật đèn — LIGHT</option><option value="6">Ngoài tập lệnh — UNKNOWN</option></select>
+<label for="noise">Mức nhiễu mô phỏng <output id="noiseValue">15%</output></label>
+<input type="range" min="0" max="100" value="15" id="noise"><div class="row"><button id="run">Chạy thử nghiệm</button><button id="reset" class="outline">Đặt lại</button></div>
+<div class="term"><div>MODEL: <span id="modelStatus">đang nạp...</span></div><div>DIRECT: <b id="pred">—</b></div><div>VERIFY: <b id="ref">—</b></div>
+<div>GATE: <b id="gate">—</b></div><div>BASE27: <b id="base">—</b></div><div>3 TRITS: <b id="trits">—</b></div></div></div>
+<div class="panel"><div class="canvashead"><span>SPARSE SPECTROGRAM / 8 × 8</span><small>Tần số / thời gian</small></div>
+<canvas id="spect" width="800" height="480" role="img" aria-label="Phổ tần thời gian tổng hợp"></canvas>
+<div class="legend"><i></i>Năng lượng tương đối <span id="confidence"></span></div>
+<p class="fine">Không phải ảnh phổ giọng người thu từ micro.</p></div></div></section>
+<section class="section"><div class="sectionhead"><p class="eyebrow">03 / EVIDENCE BOUNDARIES</p><h2>Phân biệt số đo và giả thuyết.</h2></div>
+<div class="dual"><article><h3>Đã tái lập bằng phần mềm</h3><p>Huấn luyện tín hiệu nhân tạo theo seed cố định; kiểm thử lớp nhận dạng, cổng từ chối và đặc trưng phổ số nguyên Python/C11 trùng khớp.</p><pre id="report">Đang đọc report.json…</pre></article>
+<article><h3>Chưa đo</h3><p>Chưa có WER/CER thực, MOS TTS, đánh giá giọng Bắc/Trung/Nam, RAM/Flash/độ trễ trên chip ESP32-S3, an toàn hệ thống robot hoặc kết quả thống kê trên giọng người.</p><p class="fine">Các phép thử phải chạy trên dữ liệu speaker-disjoint và phần cứng cụ thể trước khi khẳng định.</p></article></div></section>
+<section id="reproduce" class="section"><div class="sectionhead"><p class="eyebrow">04 / OPEN REPRODUCTION</p><h2>Tái lập từ mã nguồn.</h2></div>
+<pre class="terminal">git clone https://github.com/xulytiengviet/end2end.git
+cd end2end
+python3 experiment.py --seed 20261113 --train 8 --test 6
+python3 -m unittest discover -s tests -v
+gcc -std=c11 -O2 -Wall -Wextra -Werror firmware/infer.c -o infer
+./infer --selftest
+node scripts/build_lexicon.js
+python3 -m http.server 8000</pre>
+<p>Truy cập localhost:8000/docs/. Mô hình và kết quả được tạo lại từ script, còn từ điển dùng bản converter CVNSS4.0 gốc đã lưu trong repository.</p></section></main>
+<footer><span>END2END / Long Ngo / MIT · Credit CVNSS4.0 original creators</span><span>Research protocol • 2026-11-13</span></footer>
+<script src="app.js"></script></body></html>
