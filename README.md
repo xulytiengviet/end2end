@@ -71,3 +71,14 @@ For an actual C/Python comparison, `tests/test_pipeline.py` produces new s16le P
 ## Credits and license
 
 **Research prototype & software development:** Long Ngo. Software written for this repository: MIT (see `LICENSE`). **CVNSS4.0 original work:** Kiều Trường Lâm and Trần Tư Bình; it is not attributed as a new invention to the author of this repository. Source converter is redistributed with upstream licensing scope and its attribution; verify rights for any other third-party assets.
+## Optional real-audio neural path (not included in reported toy scores)
+
+See [experiments/README.md](experiments/README.md) and [experiments/train_real.py](experiments/train_real.py). This optional PyTorch 64-bin log-mel CNN accepts an explicit speaker-disjoint manifest of real 16-kHz Vietnamese command WAV files. It exports a separate results/real/report.json and model.pt. **No real-speech metrics have been collected by this project release**; do not conflate optional training with the synthetic software benchmark.
+
+## ESP-IDF wrapper
+
+[firmware/esp32s3/](firmware/esp32s3/) contains a buildable-in-principle ESP32-S3 project that generates an artificial STOP waveform on device and calls the integer classifier. It has **not been flashed, cross-built, or benchmarked on a board**. It never accesses I2S microphones or motor actuators.
+
+## GitHub Pages
+
+After enabling GitHub Pages from the repository's main branch and root directory in Settings → Pages, the dashboard should be reachable at https://xulytiengviet.github.io/end2end/docs/ . Its public availability is not guaranteed until Pages deployment is confirmed.
