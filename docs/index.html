@@ -3,7 +3,7 @@
 <meta name="description" content="END2END: Spectrogram trực tiếp tới lệnh, CVNSS4.0 reference lexicon, Base27, trit và mô phỏng firmware số nguyên.">
 <title>END2END • Spectrogram × CVNSS4.0 × Trit</title><link rel="stylesheet" href="style.css"></head>
 <body><header><nav><a class="brand" href="#top"><span class="brand-icon">E2E</span><b>END2END</b><small>RESEARCH / 2026</small></a>
-<div class="navlinks"><a href="#architecture">Kiến trúc</a><a href="#lab">Mô phỏng</a><a href="#results">Kết quả</a><a href="#reproduce">Tái lập</a><a href="../paper/preprint.md">Preprint ↗</a></div></nav></header>
+<div class="navlinks"><a href="#sonic">Học thuyết & kiểm chứng</a><a href="#architecture">Kiến trúc</a><a href="#lab">Mô phỏng</a><a href="#results">Kết quả</a><a href="#reproduce">Tái lập</a><a href="../paper/preprint.md">Preprint ↗</a></div></nav></header>
 <main id="top"><section class="hero"><p class="eyebrow">VIETNAMESE EDGE SPEECH / OPEN REPRODUCIBILITY</p>
 <h1>Speech → <em>Spectrogram</em> → Action<br><span>CVNSS4.0 as reference lexicon.</span></h1>
 <p class="lead">Suy luận trực tiếp từ đặc trưng phổ đến lệnh giới hạn. CVNSS4.0 chỉ làm từ điển tham chiếu chính tả để tra cứu nhãn; Base27 chuyển A–Z + SPACE thành ba trit cho nghiên cứu dữ liệu số nguyên và firmware.</p>
@@ -21,6 +21,25 @@
 <div><b>04</b><strong>Safety gate</strong><small>Verify + NOOP</small></div></div>
 <div class="dual"><article><h3>Nhánh quyết định trực tiếp</h3><p>64 đặc trưng phổ → nhãn lệnh. Đây là prototype nearest-centroid, <strong>không</strong> giả nhận là mạng neural end-to-end hay ASR.</p></article>
 <article><h3>Từ điển CVNSS4.0</h3><p>Codec audit-safe của dự án CVNSS4.0 gốc chuyển tên lệnh Unicode thành mã chính tả ASCII và kiểm tra khả năng giải mã. Không đại diện cho IPA hoặc giọng vùng miền.</p></article></div></section>
+<section id="sonic" class="section sonic-section" aria-labelledby="sonic-title">
+<div class="sectionhead"><p class="eyebrow">05 / CVNSS4.0-SONIC · THEORY &amp; REPRODUCIBLE EVIDENCE</p>
+<h2 id="sonic-title">Học thuyết Sóng–Chữ: mệnh đề có thể kiểm chứng.</h2>
+<p>Đây là <strong>khung giả thuyết nghiên cứu</strong>, chưa phải định lý về mọi chuỗi tiếng Việt hay hiệu năng robot. Chúng tôi phân biệt chứng minh toán học hữu hạn, kiểm thử mã nguồn, mô phỏng tín hiệu nhân tạo, phản ví dụ và phép đo trên giọng nói thật.</p></div>
+<div class="sonic-ribbon"><span>O · Unicode chính tả</span><span>E · CVNSS mã tham chiếu</span><span>27 ký hiệu ↔ 3 trit</span><span>A · Lệnh có kiểu</span></div>
+<div class="dual"><article><h3>Nguyên lý hai nhánh, một quyết định</h3><p><strong>Nhánh nhanh:</strong> PCM → phổ thời gian–tần số → nhãn lệnh. <strong>Nhánh kiểm:</strong> mẫu phổ → kiểm tra dạng sóng + từ điển CVNSS4.0 → allowlist/safety gate → NOOP hoặc ứng viên lệnh. Hai nhánh dùng cùng tín hiệu, nên lỗi có thể tương quan.</p></article>
+<article><h3>Hệ tiên đề A1–A5</h3><p><strong>A1:</strong> tính tất định có kiểm toán. <strong>A2:</strong> bảo toàn thông tin trên miền xác định. <strong>A3:</strong> đa vùng miền cần dữ liệu độc lập. <strong>A4:</strong> CVNSS chỉ là từ điển tham chiếu. <strong>A5:</strong> nhật ký truy nguyên từ lệnh về nhãn và phiên bản codec.</p></article></div>
+<div class="sonic-proof-grid"><article class="sonic-proof">
+<p class="eyebrow">PROOF OBLIGATIONS / C1–C4</p><h3>Bản kiểm định có cả kết quả bác bỏ</h3>
+<p>Điều kiện C2 toàn miền <strong>không đúng</strong> cho bộ chuyển đổi hiện tại: <code>E("ề") = E("oet") = "ed"</code>. Mã <code>ed</code> có hai ứng viên giải mã; Base27–trit chỉ bảo toàn <em>chuỗi mã</em>, không phục hồi phần thông tin chính tả đã mất.</p>
+<div class="sonic-table-wrap"><table class="sonic-evidence"><caption>Trạng thái được lấy từ <code>results/sonic-proof.json</code>, không tạo số liệu ngẫu nhiên trên trang.</caption><thead><tr><th>Điều kiện</th><th>Trạng thái</th></tr></thead><tbody id="sonic-evidence-body"><tr><td>Đang tải</td><td>—</td></tr></tbody></table></div>
+<p class="fine" id="sonic-scope">Đang tải nguồn dữ liệu và hash…</p></article>
+<article class="sonic-proof"><p class="eyebrow">LIVE LEXICON / EXECUTABLE COUNTEREXAMPLE</p><h3>Thử nghiệm CVNSS4.0 thật ngay trên trình duyệt</h3><p>Thử mã hóa Unicode → CVNSS → giải mã mặc định → Base27 → trit; hiển thị các ứng viên khi xuất hiện mơ hồ. Không phải ASR, TTS hoặc mô phỏng firmware chính xác từng bit.</p>
+<label for="sonic-input">Văn bản tiếng Việt</label><input id="sonic-input" type="text" value="trái" spellcheck="false" autocomplete="off">
+<div class="row"><button type="button" id="sonic-run">Mã hóa và kiểm tra</button><button type="button" id="sonic-example" class="outline">Xem phản ví dụ `ề`</button></div>
+<pre id="sonic-output" aria-live="polite">Đang tải converter…</pre></article></div>
+<div class="sonic-notice"><strong>Ranh giới bằng chứng:</strong> bộ dữ liệu hiện tại gồm 144 mẫu huấn luyện / 126 mẫu kiểm tra đều là âm đa tần số nhân tạo. Chưa có WER giọng Việt, phép thử IPA đa vùng, độ trễ ESP32-S3 thật hoặc đánh giá robot an toàn. Các ngưỡng WER ≤8%, p95 ≤110 ms, 0/10.000 lỗi chỉ là <em>mục tiêu thử nghiệm</em>.</div>
+<div class="actions"><a class="primary" href="https://github.com/xulytiengviet/end2end/blob/main/theory/SONIC_SPEC.md">Đặc tả & điều kiện bác bỏ ↗</a><a class="secondary" href="https://github.com/xulytiengviet/end2end/blob/main/results/sonic-proof.json">Báo cáo máy đọc được ↗</a><a class="secondary" href="https://github.com/xulytiengviet/end2end/blob/main/paper/preprint.md">Preprint ↗</a></div>
+</section>
 <section id="lab" class="section lab"><div class="sectionhead"><p class="eyebrow">02 / INTERACTIVE LAB</p><h2>Phổ tần tổng hợp và cổng kiểm soát.</h2>
 <p>Biểu đồ được tạo bằng véc-tơ đặc trưng mô phỏng trên trình duyệt; phép kiểm chứng bit-exact chạy trong chương trình Python/C11 được công bố riêng.</p></div>
 <div class="labgrid"><div class="panel"><label for="command">Lệnh / mẫu chưa biết</label>
@@ -47,4 +66,4 @@ node scripts/build_lexicon.js
 python3 -m http.server 8000</pre>
 <p>Truy cập localhost:8000/docs/. Mô hình và kết quả được tạo lại từ script, còn từ điển dùng bản converter CVNSS4.0 gốc đã lưu trong repository.</p></section></main>
 <footer><span>END2END / Long Ngo / MIT · Credit CVNSS4.0 original creators</span><span>Research protocol • 2026-11-13</span></footer>
-<script src="app.js"></script></body></html>
+<script src="app.js"></script><script src="../vendor/cvnss-converter.js"></script><script src="sonic.js"></script></body></html>

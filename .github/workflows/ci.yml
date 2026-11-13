@@ -18,8 +18,12 @@ jobs:
           python -m py_compile experiment.py experiments/train_real.py
           node --check docs/app.js
           node --check scripts/build_lexicon.js
+          node --check docs/sonic.js
+          node --check scripts/verify_sonic.js
       - name: Rebuild CVNSS4.0 lexicon
         run: node scripts/build_lexicon.js
+      - name: Verify SONIC scientific obligations (includes counterexamples)
+        run: node scripts/verify_sonic.js
       - name: Assert source provenance and counts
         run: |
           python -c "import json; d=json.load(open('results/report.json')); assert d['test_samples']==126 and d['data_type']=='synthetic_multitone_surrogate_not_human_speech'"
@@ -49,4 +53,5 @@ jobs:
             scripts/**
             tests/**
             vendor/**
+            theory/**
             .github/workflows/**

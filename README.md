@@ -82,3 +82,16 @@ See [experiments/README.md](experiments/README.md) and [experiments/train_real.p
 ## GitHub Pages
 
 After enabling GitHub Pages from the repository's main branch and root directory in Settings → Pages, the dashboard should be reachable at https://xulytiengviet.github.io/end2end/docs/ . Its public availability is not guaranteed until Pages deployment is confirmed.
+
+## CVNSS4.0-Sonic: scientific consistency layer (v0.2)
+
+The scientific framework, assumptions, formal C1–C4 audit, explicit falsifying collisions, experiment roadmap, and licensing/provenance are consolidated in [theory/SONIC_SPEC.md](theory/SONIC_SPEC.md). The [live website](https://xulytiengviet.github.io/end2end/docs/#sonic) displays a machine-generated evidence table and lets readers reproduce the loss-of-information counterexample using the pinned original converter. It does not upgrade a synthetic demo to natural-speech evidence.
+
+```bash
+node scripts/build_lexicon.js
+node scripts/verify_sonic.js
+python3 -m unittest discover -s tests -v
+# See results/sonic-proof.json; statuses explicitly include REFUTED and UNTESTED.
+```
+
+Read the status labels literally: **PASS** refers only to a stated finite domain; **REFUTED** records a counterexample to a universal claim; **UNTESTED** means no implementation of an independent phonological model; **UNMEASURED** means no real benchmark. Neither fixed-point source code nor three-trit transport implies a deployed ternary processor.

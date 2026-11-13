@@ -1,0 +1,104 @@
+{
+  "schema_version": "sonic-proof-v0.2",
+  "study": "CVNSS4.0-Sonic / finite-domain formal checks",
+  "evidence_type": "reproducible_software_checks_not_natural_speech",
+  "seed": 20261113,
+  "provenance": {
+    "converter_version": "5.0.0-audit-safe",
+    "converter_sha256": "8137cdf0949444f5e7cec215befc9391d768701c9dafc5f93adcf3d0e58ba708",
+    "lexicon_sha256": "1d10f806a78380adbd3b621ba4e0c16b575a23f58faf9c0bbf11320162737304",
+    "verification_script_sha256": "18abba82ea1b6da339ca8bf4e819f7e974f48e50f0f7fc629ea88558b87524a9"
+  },
+  "results": {
+    "base27_bijection": {
+      "status": "PASS",
+      "cases": 27,
+      "scope": "A-Z plus SPACE only"
+    },
+    "finite_lexicon_roundtrip": {
+      "status": "PASS",
+      "cases": 6,
+      "scope": "six authorised Unicode labels only"
+    },
+    "deterministic_repeats": {
+      "status": "PASS",
+      "calls": 10000,
+      "distinct_inputs": 6
+    },
+    "cvnss_global_bijection": {
+      "status": "REFUTED",
+      "counterexample": {
+        "orthographies": [
+          "ề",
+          "oet"
+        ],
+        "same_code": "ed"
+      },
+      "other_collisions": [
+        {
+          "orthographies": [
+            "ẽ",
+            "oec"
+          ],
+          "same_code": "es"
+        },
+        {
+          "orthographies": [
+            "ồ",
+            "oat"
+          ],
+          "same_code": "od"
+        },
+        {
+          "orthographies": [
+            "ộ",
+            "oap"
+          ],
+          "same_code": "of"
+        },
+        {
+          "orthographies": [
+            "õ",
+            "oac"
+          ],
+          "same_code": "os"
+        }
+      ]
+    },
+    "cvnss_ipa_bijection": {
+      "status": "UNTESTED",
+      "reason": "No complete regional phonology/G2P model or verified inverse"
+    },
+    "formal_C1": {
+      "status": "UNTESTED"
+    },
+    "formal_C2_global": {
+      "status": "REFUTED",
+      "counterexample": "ề and oet both encode to ed"
+    },
+    "formal_C2_restricted": {
+      "status": "PASS",
+      "cases": 6
+    },
+    "formal_C3": {
+      "status": "UNTESTED",
+      "reason": "No validated phonological map D and independent R"
+    },
+    "formal_C4": {
+      "status": "UNTESTED",
+      "reason": "No validated phonological map D and independent R"
+    },
+    "real_audio_wer": {
+      "status": "UNMEASURED",
+      "value": null
+    },
+    "hardware_esp32s3_latency_ms": {
+      "status": "UNMEASURED",
+      "value": null
+    },
+    "robot_safety_certification": {
+      "status": "UNMEASURED",
+      "value": null
+    }
+  }
+}
