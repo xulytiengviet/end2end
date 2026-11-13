@@ -3,7 +3,7 @@
 const $=id=>document.getElementById(id);
 const names=['STOP','FORWARD','BACK','LEFT','RIGHT','LIGHT','UNKNOWN'];
 const signatures=[[0,0,1,1,0,0,1,1],[1,2,3,4,1,2,3,4],[4,3,2,1,4,3,2,1],[1,3,1,3,1,3,1,3],[3,1,3,1,3,1,3,1],[5,6,7,5,6,7,5,6]];
-let centroids=null,iteration=0;
+let centroids=null,lexicon=null,iteration=0;
 const base27=s=>[...s].map(c=>c===' '?26:c.charCodeAt(0)-65);
 const trits=n=>[Math.floor(n/9),Math.floor(n/3)%3,n%3].join('');
 function sample(label,noise){
@@ -51,10 +51,11 @@ function simulate(){
   const v=sample(label,noise),a=predict(v);
   render(v);
   $('pred').textContent=a.prediction>=0?names[a.prediction]:'MISSING MODEL';
-  $('ref').textContent=a.verified?'SIGNATURE AGREES':'UNVERIFIED';
+  const entry=lexicon?.entries?.find(x=>x.id===names[a.prediction]);
+  $('ref').textContent=(a.verified?'SPECTRAL PASS':'NO MATCH') + ' / CVNSS: '+(entry?.cvnss||'N/A');
   $('gate').textContent=a.decision;
   $('gate').style.color=a.decision==='NOOP'?'#ff867b':'#d5fb64';
-  const ascii=a.prediction>=0?names[a.prediction]:'STOP';
+  const ascii=(entry?.cvnss||'UNKNOWN').toUpperCase();
   const codes=base27(ascii);
   $('base').textContent=codes.join(' ');
   $('trits').textContent=codes.map(trits).join(' ');
@@ -65,8 +66,10 @@ $('reset').addEventListener('click',()=>{$('noise').value=15;$('command').value=
 $('noise').addEventListener('input',()=>$('noiseValue').textContent=$('noise').value+'%');
 Promise.all([
   fetch('../results/model.json').then(r=>{if(!r.ok)throw Error('model');return r.json()}),
-  fetch('../results/report.json').then(r=>{if(!r.ok)throw Error('report');return r.json()})
-]).then(([model,report])=>{
+  fetch('../results/report.json').then(r=>{if(!r.ok)throw Error('report');return r.json()}),
+  fetch('../data/lexicon.json').then(r=>{if(!r.ok)throw Error('lexicon');return r.json()})
+]).then(([model,report,dict])=>{
+  lexicon=dict;
   centroids=model.centroids;
   $('modelStatus').textContent='SYNTHETIC CENTROID / 64 FEATURES';
   $('samples').textContent=report.test_samples.toLocaleString('vi-VN');
