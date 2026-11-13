@@ -1,0 +1,27 @@
+name: Reproduce synthetic software experiment
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Rebuild synthetic model
+        run: python experiment.py --seed 20261113 --train 8 --test 6
+      - name: Python and C parity tests
+        run: python -m unittest discover -s tests -v
+      - name: Rebuild CVNSS4.0 lexicon
+        run: node scripts/build_lexicon.js
+      - name: Assert source provenance and counts
+        run: |
+          python -c "import json; d=json.load(open('results/report.json')); assert d['test_samples']==126 and d['data_type']=='synthetic_multitone_surrogate_not_human_speech'"
+          node -e "const l=require('./data/lexicon.json');if(l.entries.length!==6)process.exit(1)"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: synthetic-research-evidence
+          path: |
+            results/*.json
+            data/lexicon.json
